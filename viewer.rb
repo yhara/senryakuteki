@@ -4,6 +4,13 @@ require 'sinatra'
 require 'environment.rb'
 require 'senryakuteki.rb'
 
+Sinatra::Default.set(:logging => true)
+
+helpers do
+  include Rack::Utils
+  alias_method :h, :escape_html
+end
+
 template :layout do
   <<-EOD
   <html>
@@ -26,8 +33,12 @@ get '*' do
 end
 
 post '*' do
-  @text = params['text']
+  @text = Senryakuteki.convert(params['text'])
   erb <<-EOD
-  <%= @text %>
+  <div>
+    <%= h @text %>
+  </div>
+
+  <a href='.'>別の文章を変換する</a>
   EOD
 end

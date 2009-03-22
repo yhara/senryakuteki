@@ -69,7 +69,6 @@ module Senryakuteki
         end
       end
 
-      $stderr.puts "#{node.surface}\t\t#{node.feature}".toutf8
       result << "#{node.surface}"
 
       node = node.next
